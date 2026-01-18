@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { verifyToken } from '@/lib/auth'
 
-export const runtime = 'edge'
+
 
 export async function GET(req: NextRequest) {
     try {
@@ -16,11 +16,9 @@ export async function GET(req: NextRequest) {
         if (decoded.role === 'PATIENT') {
             where.patientId = decoded.id
         } else {
-            where.slot = {
-                schedule: {
-                    doctor: {
-                        medicalCenterId: decoded.id
-                    }
+            where.schedule = {
+                doctor: {
+                    medicalCenterId: decoded.id
                 }
             }
         }
@@ -42,6 +40,7 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.json(bookings)
     } catch (error) {
+        console.error(error);
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
     }
 }

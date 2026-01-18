@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { verifyToken } from '@/lib/auth'
 
-export const runtime = 'edge'
+
 
 export async function GET(req: NextRequest) {
     try {
@@ -50,6 +50,49 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json(doctor)
     } catch (error) {
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    }
+}
+
+export async function DELETE(req: NextRequest) {
+    try {
+        const token = req.cookies.get('token')?.value
+        if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+        const decoded: any = await verifyToken(token)
+        if (!decoded || decoded.role !== 'ADMIN') {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+        }
+
+        const { searchParams } = new URL(req.url)
+        const id = searchParams.get('id')
+
+        if (!id) {
+            return NextResponse.json({ error: 'Missing doctor id' }, { status: 400 })
+        }
+
+        // Check if there are any booked slots first to prevent accidental deletions
+        const bookedSlots = await prisma.slot.count({
+            where: {
+                schedule: { doctorId: id },
+                status: 'BOOKED'
+            }
+        })
+
+        if (bookedSlots > 0) {
+            return NextResponse.json({ error: 'Cannot delete doctor with active bookings' }, { status: 400 })
+        }
+
+        await prisma.doctor.delete({
+            where: {
+                id,
+                medicalCenterId: decoded.id
+            }
+        })
+
+        return NextResponse.json({ success: true })
+    } catch (error) {
+        console.error('Doctor deletion error:', error)
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
     }
 }

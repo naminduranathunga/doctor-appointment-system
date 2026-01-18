@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { CircleX } from "lucide-react"
 
 interface Doctor {
     id: string
@@ -105,7 +106,26 @@ export default function DoctorsPage() {
                                                 <div className="font-medium">{doc.name}</div>
                                                 <div className="text-sm text-muted-foreground">{doc.specialty}</div>
                                             </div>
-                                            <Button variant="outline" size="sm">Manage Schedule</Button>
+                                            <div className="flex items-center space-x-2">
+                                                <Button variant="outline" size="sm">Manage Schedule</Button>
+                                                <Button
+                                                    variant="ghost"
+                                                    className="text-red-400 cursor-pointer"
+                                                    size="sm"
+                                                    onClick={async () => {
+                                                        if (confirm("Are you sure you want to remove this doctor?")) {
+                                                            const res = await fetch(`/api/v1/doctors?id=${doc.id}`, { method: "DELETE" })
+                                                            if (res.ok) fetchDoctors()
+                                                            else {
+                                                                const err = await res.json()
+                                                                alert(err.error || "Failed to delete doctor")
+                                                            }
+                                                        }
+                                                    }}
+                                                >
+                                                    <CircleX size={18} />
+                                                </Button>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>

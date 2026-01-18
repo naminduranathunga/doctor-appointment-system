@@ -43,8 +43,14 @@ model Schedule {
   bufferTime   Int      // in minutes
   totalSlots   Int
   slots        Slot[]
+  status       ScheduleStatus @default(DRAFT)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+enum ScheduleStatus {
+  DRAFT
+  PUBLISHED
 }
 
 enum SlotStatus {
@@ -52,6 +58,9 @@ enum SlotStatus {
   BOOKED
   RESERVED_MANUAL
   CANCELLED
+  SERVING
+  COMPLETED
+  NO_SHOW
 }
 
 model Slot {
@@ -74,4 +83,12 @@ model Patient {
   slots     Slot[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model OTP {
+  id        String   @id @default(cuid())
+  mobile    String   @unique
+  code      String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }

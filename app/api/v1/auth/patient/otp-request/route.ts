@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-
-// In a real app, use Redis or a DB table with expiration
-const otpStore = new Map<string, { otp: string, expires: number }>()
-
-export const runtime = 'edge'
+import prisma from '@/lib/prisma'
 
 export async function POST(req: NextRequest) {
     try {
@@ -15,11 +11,20 @@ export async function POST(req: NextRequest) {
 
         // Generate a 6-digit OTP
         const otp = Math.floor(100000 + Math.random() * 900000).toString()
+        const expiresAt = new Date(Date.now() + 5 * 60 * 1000)
 
-        // Store OTP for 5 minutes
-        otpStore.set(mobile, {
-            otp,
-            expires: Date.now() + 5 * 60 * 1000
+        // Store OTP in Database
+        await prisma.oTP.upsert({
+            where: { mobile },
+            update: {
+                code: otp,
+                expiresAt
+            },
+            create: {
+                mobile,
+                code: otp,
+                expiresAt
+            }
         })
 
         // Mock SMS send
@@ -35,4 +40,3 @@ export async function POST(req: NextRequest) {
     }
 }
 
-export { otpStore }

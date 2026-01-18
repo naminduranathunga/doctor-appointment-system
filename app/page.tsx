@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Hospital, UserCircle, QrCode } from "lucide-react"
+import MobileNav from "@/components/mobile-nav"
 
 export default function Home() {
     return (
@@ -36,7 +37,7 @@ export default function Home() {
                                 <span>Medical Center Portal</span>
                             </Button>
                         </Link>
-                        <Link href="/auth/patient">
+                        <Link href="/my-appointments">
                             <Button size="lg" variant="outline" className="w-full h-32 flex flex-col space-y-2 text-center">
                                 <UserCircle className="h-8 w-8 mx-auto" />
                                 <span>Patient Portal</span>
@@ -53,9 +54,10 @@ export default function Home() {
                 </div>
             </main>
 
-            <footer className="border-t py-8 text-center text-sm text-muted-foreground">
+            <footer className="border-t py-8 text-center text-sm text-muted-foreground pb-24 md:pb-8">
                 © 2026 MedCare SaaS. Built for dispensaries.
             </footer>
+            <MobileNav />
         </div>
     )
 }
