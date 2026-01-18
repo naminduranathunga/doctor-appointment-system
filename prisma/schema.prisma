@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model MedicalCenter {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  address   String?
+  phone     String?
+  doctors   Doctor[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Doctor {
+  id              String        @id @default(cuid())
+  name            String
+  specialty       String
+  medicalCenterId String
+  medicalCenter   MedicalCenter @relation(fields: [medicalCenterId], references: [id])
+  schedules       Schedule[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model Schedule {
+  id           String   @id @default(cuid())
+  doctorId     String
+  doctor       Doctor   @relation(fields: [doctorId], references: [id])
+  date         DateTime
+  startTime    DateTime
+  endTime      DateTime
+  slotDuration Int      // in minutes
+  bufferTime   Int      // in minutes
+  totalSlots   Int
+  slots        Slot[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+enum SlotStatus {
+  AVAILABLE
+  BOOKED
+  RESERVED_MANUAL
+  CANCELLED
+}
+
+model Slot {
+  id         String     @id @default(cuid())
+  scheduleId String
+  schedule   Schedule   @relation(fields: [scheduleId], references: [id])
+  slotNumber Int
+  time       DateTime
+  status     SlotStatus @default(AVAILABLE)
+  patientId  String?
+  patient    Patient?   @relation(fields: [patientId], references: [id])
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model Patient {
+  id        String   @id @default(cuid())
+  mobile    String   @unique
+  name      String?
+  slots     Slot[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
