@@ -24,6 +24,7 @@ model MedicalCenter {
 model Doctor {
   id              String        @id @default(cuid())
   name            String
+  specialty       String
   medicalCenterId String
   medicalCenter   MedicalCenter @relation(fields: [medicalCenterId], references: [id])
   schedules       Schedule[]
