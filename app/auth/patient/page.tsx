@@ -53,7 +53,7 @@ export default function PatientAuthPage() {
             const data = await res.json()
             if (!res.ok) throw new Error(data.error)
 
-            router.push("/")
+            router.push("/patient-dashboard")
             router.refresh()
         } catch (err: any) {
             setError(err.message)

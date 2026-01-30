@@ -76,7 +76,7 @@ export default function MedicalCentersPage() {
                                 )}
                                 <div className="pt-2">
                                     <span className="bg-primary/10 text-primary px-2 py-1 rounded text-xs font-medium">
-                                        {center._count?.doctors || 0} Doctors Available
+                                        {center._count?.doctors || 0} Sections Available
                                     </span>
                                 </div>
                             </CardContent>

@@ -74,7 +74,7 @@ export default function RegisterPage() {
                             <Input
                                 required
                                 type="password"
-                                placeholder="••••••••"
+                                placeholder="------"
                                 value={formData.password}
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                             />

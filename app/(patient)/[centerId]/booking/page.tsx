@@ -143,7 +143,7 @@ export default function BookingPage() {
         <div className="max-w-4xl mx-auto p-4 space-y-8 py-12">
             <div className="text-center">
                 <h1 className="text-3xl font-bold">Book an Appointment</h1>
-                <p className="text-muted-foreground">Select a doctor and available time slot.</p>
+                <p className="text-muted-foreground">Select a section and available time slot.</p>
             </div>
 
             {message && (
@@ -156,11 +156,11 @@ export default function BookingPage() {
             )}
 
             <div className="grid gap-6 md:grid-cols-3">
-                {/* Step 1: Select Doctor */}
+                {/* Step 1: Select Section */}
                 <Card className={bookingStep !== 1 ? "opacity-50" : ""}>
                     <CardHeader>
                         <CardTitle className="text-lg flex justify-between items-center">
-                            <span>1. Select Doctor</span>
+                            <span>1. Select Section</span>
                             {bookingStep > 1 && <Button variant="ghost" size="sm" onClick={() => setBookingStep(1)}>Change</Button>}
                         </CardTitle>
                     </CardHeader>
