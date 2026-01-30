@@ -54,7 +54,7 @@ export default function RegisterPage() {
                             <label className="text-sm font-medium">Center Name</label>
                             <Input
                                 required
-                                placeholder="e.g. City Dental Clinic"
+                                placeholder="Enter center name"
                                 value={formData.name}
                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             />
@@ -64,7 +64,7 @@ export default function RegisterPage() {
                             <Input
                                 required
                                 type="email"
-                                placeholder="admin@example.com"
+                                placeholder="Enter your email"
                                 value={formData.email}
                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             />
@@ -74,7 +74,7 @@ export default function RegisterPage() {
                             <Input
                                 required
                                 type="password"
-                                placeholder="------"
+                                placeholder="Enter your password"
                                 value={formData.password}
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                             />
@@ -82,7 +82,7 @@ export default function RegisterPage() {
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Address</label>
                             <Input
-                                placeholder="123 Main St, Kandy"
+                                placeholder="Enter center address"
                                 value={formData.address}
                                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                             />
