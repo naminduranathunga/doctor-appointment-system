@@ -50,7 +50,7 @@ export default function DashboardOverview() {
     }
 
     const cards = [
-        { title: "Total Doctors", value: stats.doctors, icon: Users, color: "text-blue-500" },
+        { title: "Total Sections", value: stats.doctors, icon: Users, color: "text-blue-500" },
         { title: "Active Schedules", value: stats.activeSchedules, icon: Calendar, color: "text-green-500" },
         { title: "Today's Bookings", value: stats.todayBookings, icon: CheckCircle, color: "text-purple-500" },
     ]

@@ -160,7 +160,7 @@ export default function SchedulesPage() {
         <div className="space-y-8 animate-in fade-in duration-500">
             <div>
                 <h2 className="text-3xl font-bold tracking-tight">Schedule Management</h2>
-                <p className="text-muted-foreground">Draft and publish doctor availability.</p>
+                <p className="text-muted-foreground">Draft and publish section availability.</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -173,14 +173,14 @@ export default function SchedulesPage() {
                         <CardContent>
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium">Doctor</label>
+                                    <label className="text-sm font-medium">Section</label>
                                     <select
                                         required
                                         className="w-full flex h-10 rounded-md border border-input bg-background px-3 py-1 text-sm"
                                         value={formData.doctorId}
                                         onChange={(e) => setFormData({ ...formData, doctorId: e.target.value })}
                                     >
-                                        <option value="">Choose a doctor</option>
+                                        <option value="">Choose a section</option>
                                         {doctors.map((doc) => (
                                             <option key={doc.id} value={doc.id}>{doc.name}</option>
                                         ))}
@@ -270,7 +270,7 @@ export default function SchedulesPage() {
                                     value={selectedDoctor}
                                     onChange={(e) => setSelectedDoctor(e.target.value)}
                                 >
-                                    <option value="">All Doctors</option>
+                                    <option value="">All Sections</option>
                                     {doctors.map((doc) => (
                                         <option key={doc.id} value={doc.id}>{doc.name}</option>
                                     ))}
@@ -355,7 +355,7 @@ export default function SchedulesPage() {
                         <Card className="animate-in slide-in-from-bottom-4 duration-300">
                             <CardHeader>
                                 <CardTitle className="text-lg flex items-center justify-between">
-                                    <span>Slots for {activeSchedule.doctor.name}</span>
+                                    <span>Slots for Section {activeSchedule.doctor.name}</span>
                                     <div className="flex items-center space-x-2">
                                         <Badge variant="outline">
                                             {new Date(activeSchedule.date).toLocaleDateString()}

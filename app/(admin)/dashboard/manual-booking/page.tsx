@@ -12,7 +12,6 @@ import { getLocalTodayString } from "@/lib/utils"
 interface Doctor {
     id: string
     name: string
-    specialty: string
 }
 
 interface Slot {
@@ -129,13 +128,13 @@ export default function ManualBookingPage() {
                             />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-xs font-medium">Doctor (Optional)</label>
+                            <label className="text-xs font-medium">Section (Optional)</label>
                             <select
                                 className="h-10 rounded-md border border-input bg-background px-3 py-1 text-sm w-48"
                                 value={selectedDoctor}
                                 onChange={(e) => setSelectedDoctor(e.target.value)}
                             >
-                                <option value="">All Doctors</option>
+                                <option value="">All Sections</option>
                                 {doctors.map((doc) => (
                                     <option key={doc.id} value={doc.id}>{doc.name}</option>
                                 ))}
@@ -166,9 +165,8 @@ export default function ManualBookingPage() {
                                         onClick={() => handleSelectSchedule(s)}
                                         className={`p-3 rounded-md border text-sm cursor-pointer transition-colors hover:border-primary ${activeSchedule?.id === s.id ? 'border-primary bg-primary/5' : ''}`}
                                     >
-                                        <div className="font-semibold flex items-center justify-between">
+                                        <div className="font-semibold">
                                             <span>{s.doctor.name}</span>
-                                            <Badge variant="outline" className="text-[9px]">{s.doctor.specialty}</Badge>
                                         </div>
                                         <div className="text-[10px] text-muted-foreground mt-1 flex items-center space-x-2">
                                             <span className="flex items-center">
