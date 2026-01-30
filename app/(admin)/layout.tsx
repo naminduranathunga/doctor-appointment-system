@@ -17,7 +17,7 @@ export default function AdminLayout({
 
     const navItems = [
         { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-        { label: "Doctors", href: "/dashboard/doctors", icon: Users },
+        { label: "Sections", href: "/dashboard/doctors", icon: Users },
         { label: "Schedules", href: "/dashboard/schedules", icon: Calendar },
         { label: "Manual Booking", href: "/dashboard/manual-booking", icon: BookOpen },
         { label: "Live Console", href: "/dashboard/doctor", icon: Activity },

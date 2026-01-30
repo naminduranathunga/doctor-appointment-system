@@ -35,17 +35,17 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
         }
 
-        const { name, specialty } = await req.json()
+        const { name } = await req.json()
 
-        if (!name || !specialty) {
-            return NextResponse.json({ error: 'Missing name or specialty' }, { status: 400 })
+        if (!name) {
+            return NextResponse.json({ error: 'Missing name' }, { status: 400 })
         }
 
         const doctor = await prisma.doctor.create({
             data: {
                 name,
-                specialty,
-                medicalCenterId: decoded.id
+                medicalCenterId: decoded.id,
+                specialty: ""
             }
         })
 
@@ -73,6 +73,12 @@ export async function DELETE(req: NextRequest) {
             return NextResponse.json({ error: 'Missing doctor id' }, { status: 400 })
         }
 
+        // Ensure doctor exists & belongs to this medical center
+        const doctor = await prisma.doctor.findUnique({ where: { id } })
+        if (!doctor || doctor.medicalCenterId !== decoded.id) {
+            return NextResponse.json({ error: 'Doctor not found or unauthorized' }, { status: 404 })
+        }
+
         // Check if there are any booked slots first to prevent accidental deletions
         const bookedSlots = await prisma.slot.count({
             where: {
@@ -86,10 +92,7 @@ export async function DELETE(req: NextRequest) {
         }
 
         await prisma.doctor.delete({
-            where: {
-                id,
-                medicalCenterId: decoded.id
-            }
+            where: { id }
         })
 
         return NextResponse.json({ success: true })
