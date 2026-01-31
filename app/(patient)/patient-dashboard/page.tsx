@@ -21,7 +21,7 @@ export default function PatientDashboard() {
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                             {/* Book Appointment Card */}
-                            <Link href="http://localhost:3000/medical-centers" className="block">
+                            <Link href="/medical-centers" className="block">
                                 <Card className="h-40 flex flex-col items-center justify-center rounded-xl hover:shadow-lg transition-all duration-200 hover:border-primary cursor-pointer bg-card hover:bg-accent border-2 border-transparent">
                                     <Calendar className="w-12 h-12 mb-3 text-primary" />
                                     <div className="flex flex-col items-center gap-1">
@@ -32,7 +32,7 @@ export default function PatientDashboard() {
                             </Link>
 
                             {/* My Appointments Card */}
-                            <Link href="http://localhost:3000/my-appointments" className="block">
+                            <Link href="/my-appointments" className="block">
                                 <Card className="h-40 flex flex-col items-center justify-center rounded-xl hover:shadow-lg transition-all duration-200 hover:border-primary cursor-pointer bg-card hover:bg-accent border-2 border-transparent">
                                     <ClipboardList className="w-12 h-12 mb-3 text-primary" />
                                     <div className="flex flex-col items-center gap-1">
